@@ -1,0 +1,10 @@
+version: '3'
+services:
+    fusioner:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: unri_fusioner:latest
+        container_name: unri_fusioner
+        ports:
+            - '3000:3000'

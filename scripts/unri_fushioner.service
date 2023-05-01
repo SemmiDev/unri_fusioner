@@ -1,0 +1,31 @@
+[Unit]
+Description=Unri fusioner Server
+After=network.target
+
+[Service]
+Type=simple
+User=fusioner
+Group=fusioner
+LimitNOFILE=1024
+
+Environment=UNRI_fusioner_HOST=0.0.0.0
+Environment=UNRI_fusioner_PORT=3000
+
+Restart=on-failure
+RestartSec=10
+
+WorkingDirectory=/usr/local/fusioner/
+ExecStart=/usr/local/fusioner/bin/fusioner
+
+# make sure log directory exists and owned by syslog
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/log/fusioner
+ExecStartPre=/bin/chown syslog:adm /var/log/fusioner
+ExecStartPre=/bin/chmod 755 /var/log/fusioner
+
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=fusioner
+
+[Install]
+WantedBy=multi-user.target
